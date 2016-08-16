@@ -1,0 +1,19 @@
+* usully operation
+** export log
+#+BEGIN_SRC shell
+curl -XPOST 'localhost:9200/bank/account/_bulk?pretty' --data-binary @accounts.json
+curl -XPOST 'localhost:9200/shakespeare/_bulk?pretty' --data-binary @shakespeare.json
+curl -XPOST 'localhost:9200/_bulk?pretty' --data-binary @logs.jsonl
+#+END_SRC
+** look for patterns
+#+BEGIN_SRC shell
+curl 'localhost:9200/_cat/indices?v'
+#+END_SRC
+** delete patterns
+#+BEGIN_SRC shell
+curl -XDELETE http://localhost:9200/logstash-2015.12.24
+#+END_SRC
+** query syntax
+#+BEGIN_SRC shell
+account_number:<100 AND balance:>47500
+#+END_SRC
