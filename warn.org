@@ -1,0 +1,19 @@
+* the pipeline is blocked, temporary refusing new connection
+SCHEDULED: <2016-08-19 五>
+今天遇到了这个错误，原因可能是磁盘空间不够了，因为，我在处理之前发现跟盘符下的磁盘空间快满了，然后跟盘符下（默认在var/lib/elasticsearch/目录下），将存储elasticsearch的数据换了一个盘符，在重启就没事了。
+操作步骤
+- 关掉elasticsearch服务
+- 将elasticsearch移动到/data目录下，（这个盘符空间够大）
+- 修改/etc/elasticsearch/elasticsearch.yml
+- #+BEGIN_EXAMPLE yml
+# ----------------------------------- Paths ------------------------------------
+#
+# Path to directory where to store the data (separate multiple locations by comma):
+#
+path.data: /data/elasticsearch
+#
+# Path to log files:
+#
+path.logs: /data/elasticsearch
+#+END_EXAMPLE
+- 启动elasticsearch服务
