@@ -15,5 +15,5 @@ path.data: /data/elasticsearch
 # Path to log files:
 #
 path.logs: /data/elasticsearch
-#+END_EXAMPLE
+- #+END_EXAMPLE
 - 启动elasticsearch服务
