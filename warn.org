@@ -1,7 +1,6 @@
 * 相关的elk警告
-<2016-08-19 五>
 **  warn: the pipeline is blocked, temporary refusing new connection
-SCHEDULED: <2016-08-19 五>
+ <2016-08-19 五>
 今天遇到了这个错误，原因可能是磁盘空间不够了，因为，我在处理之前发现跟盘符下的磁盘空间快满了，然后跟盘符下（默认在var/lib/elasticsearch/目录下），将存储elasticsearch的数据换了一个盘符，在重启就没事了。
 *** 操作步骤
 - 关掉elasticsearch服务
@@ -19,3 +18,23 @@ path.data: /data/elasticsearch
 path.logs: /data/elasticsearch
 #+END_EXAMPLE
 - 启动elasticsearch服务
+<2016-09-20 三>
+这个问题今天有出现了，可能是因为日志太多，后来吧日志删除就好了。
+**  retrying failed action with response code: 429 
+<2016-09-21 三>
+加了几个参数好了
+*** 操作步骤
+- 关掉elasticsearch服务
+- 修改/etc/elasticsearch/elasticsearch.yml
+#+BEGIN_EXAMPLE
+threadpool.index.size: 30
+threadpool.index.queue_size: 1000
+threadpool.bulk.queue_size: 1000
+threadpool.warmer.size: 3
+threadpool.warmer.keep_alive: 2m
+#+END_EXAMPLE
+- 启动elasticsearch服务
+- 产考
+  + https://www.elastic.co/guide/en/logstash/2.3/plugins-outputs-elasticsearch.html
+  + http://stackoverflow.com/questions/37855803/rejected-execution-of-org-elasticsearch-transport-transportservice-error
+  + https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-threadpool.html
