@@ -38,3 +38,23 @@ threadpool.warmer.keep_alive: 2m
   + https://www.elastic.co/guide/en/logstash/2.3/plugins-outputs-elasticsearch.html
   + http://stackoverflow.com/questions/37855803/rejected-execution-of-org-elasticsearch-transport-transportservice-error
   + https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-threadpool.html
+** DONE Lumberjack input: The circuit breaker has detected a slowdown or stall in the pipeline, the input is closing the current connection and rejecting new connection until the pipeline recover
+<2016-10-10 Mon>
+- 这个问题坑了我很长时间
+- 我的解决方法是
+- １　清除了elasticsearch 七天以前的日志
+- ２　客户机将一天以前的日志移动到其他的目录
+- ３　删除logstash-forwarder的日志，启动
+- 清楚脚本
+#+BEGIN_SRC shell
+domain=(`cat /usr/local/scripts/domain`)
+for i in {30..40}
+do
+  for y in ${domain[@]}
+    do
+    curl -XDELETE localhost:9200/$y-`date -d "-$i day" +%Y.%m.%d`
+    done
+done
+#+END_SRC
+** elasticsearch 报的一个错误*.ckp
+解决方法直接吧报错的那个*.ckp 文件删除就行了
