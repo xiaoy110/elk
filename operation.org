@@ -1,6 +1,7 @@
 * usully operation
 ** export log
 #+BEGIN_SRC shell
+the version under v5.6
 wget https://download.elastic.co/demos/kibana/gettingstarted/logs.jsonl.gz
 wget https://download.elastic.co/demos/kibana/gettingstarted/shakespeare.json
 wget https://download.elastic.co/demos/kibana/gettingstarted/accounts.zip
@@ -9,6 +10,17 @@ unzip accounts.zip
 curl -XPOST 'localhost:9200/bank/account/_bulk?pretty' --data-binary @accounts.json
 curl -XPOST 'localhost:9200/shakespeare/_bulk?pretty' --data-binary @shakespeare.json
 curl -XPOST 'localhost:9200/_bulk?pretty' --data-binary @logs.jsonl
+#+END_SRC
+** version 6.x
+#+BEGIN_SRC shell
+wget https://download.elastic.co/demos/kibana/gettingstarted/shakespeare_6.0.json
+wget https://download.elastic.co/demos/kibana/gettingstarted/accounts.zip
+wget https://download.elastic.co/demos/kibana/gettingstarted/logs.jsonl.gz
+gunzip logs.jsonl.gz
+unzip accounts.zip
+curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/bank/account/_bulk?pretty' --data-binary @accounts.json
+curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/shakespeare/doc/_bulk?pretty' --data-binary @shakespeare_6.0.json
+curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/_bulk?pretty' --data-binary @logs.jsonl
 #+END_SRC
 ** look for patterns
 #+BEGIN_SRC shell
